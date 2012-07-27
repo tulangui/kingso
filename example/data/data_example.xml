@@ -1,0 +1,45 @@
+<doc>
+field_1=mp3 mp4
+field_2=100 30 500
+field_3=288.20
+nid=111
+field_5=500
+field_6=100.5
+field_7=0 1 2 3 5
+</doc>
+<doc>
+field_1=mp3 Ó¢Óï mp4
+field_2=10 300
+field_3=270.50
+nid=222
+field_5=5000
+field_6=200.0
+field_7=2 3 5
+</doc>
+<doc>
+field_1=Ñ§Ï°»ú mp3
+field_2=100
+field_3=600.3
+nid=333
+field_5=200
+field_6=300.4
+field_7=0 5
+</doc>
+<doc>
+field_1=mp4 mp5
+field_2=30 500
+field_3=288.20
+nid=444
+field_5=500
+field_6=100.5
+field_7=0 1 2 3 5
+</doc>
+<doc>
+field_1=mp3 mp4
+field_2=30 500
+field_3=288.20
+nid=555
+field_5=5000
+field_6=101.5
+field_7=3 50
+</doc>

@@ -1,0 +1,4 @@
+alog.rootLogger=DEBUG, rootAppender
+
+alog.appender.rootAppender=FileAppender
+alog.appender.rootAppender.fileName=@ALOG_TOP_BUILD_DIR@/configuretest1.log

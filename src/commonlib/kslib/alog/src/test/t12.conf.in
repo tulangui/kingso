@@ -1,0 +1,20 @@
+alog.logger.sub1=INFO, A1 
+alog.logger.sub2=WARN, A2
+alog.logger.sub3=ERROR, A3
+alog.logger.sub1.sub1=
+alog.logger.sub1.sub1.sub1=
+alog.logger.sub2.sub1=
+alog.logger.sub2.sub1.sub1=
+alog.logger.sub3.sub1=DEBUG
+alog.logger.sub3.sub1.sub1=
+
+inherit.sub2.sub1=false
+
+alog.appender.A1=FileAppender
+alog.appender.A1.fileName=@ALOG_TOP_BUILD_DIR@/configuretest12-1.log
+
+alog.appender.A2=FileAppender
+alog.appender.A2.fileName=@ALOG_TOP_BUILD_DIR@/configuretest12-2.log
+
+alog.appender.A3=FileAppender
+alog.appender.A3.fileName=@ALOG_TOP_BUILD_DIR@/configuretest12-3.log

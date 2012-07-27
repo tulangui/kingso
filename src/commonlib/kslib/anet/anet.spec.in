@@ -1,0 +1,71 @@
+%define _topdir         %(pwd)/rpmbuild
+
+%define name      @PACKAGE@
+%define summary   %{name} is a linux network middleware for Alibaba-inc.
+%define version   @PACKAGE_VERSION@
+%define release   @ANET_RELEASE@
+%define license   Commercial
+%define group     Libraries
+%define source    SOURCE/@PACKAGE@-%{version}.tar.gz
+%define url       http://asc.alibaba-inc.com/wiki/index.php/ANet
+%define vendor    Engine Team, ASC, Alibaba
+%define packager  @USER@@@HOSTNAME@
+%define _prefix   @prefix@
+
+%define _tmppath        %{_topdir}/tmp
+%define buildroot       %{_tmppath}/%{name}-root
+
+Name:      %{name}
+Version:   %{version}
+Release:   %{release}
+Packager:  %{packager}
+Vendor:    %{vendor}
+License:   %{license}
+Summary:   %{summary}
+Group:     %{group}
+Source:    %{source}
+URL:       %{url}
+Prefix:    %{_prefix}
+Buildroot: %{buildroot}
+Requires: alog >= 1.0.2-rc_3
+
+%description
+
+%package devel
+Summary: Header files, libraries and development documentation for %{name}.
+Group: %{group}
+Requires: %{name} = %{version}-%{release} alog-devel >= 1.0.2-rc_3
+
+%description devel
+This package contains the header files, static libraries and development
+documentation for %{name}. If you like to develop programs using %{name},
+you will need to install %{name}-devel.
+
+
+%prep
+%setup -q
+
+%build
+%configure
+make
+make check
+
+%install
+%{__rm} -rf %{buildroot}
+%makeinstall
+
+%clean
+%{__rm} -rf %{buildroot}
+
+
+%files devel
+%defattr(-,root,root)
+%{_includedir}/anet
+%{_libdir}/libanet.a
+
+%files
+%defattr(-,root,root)
+%{_libdir}/libanet*.so*
+%{_libdir}/libanet.la
+
+

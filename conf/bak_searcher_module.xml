@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<modules>
+
+    <!--
+        说明:
+        profile: 指定了profile的路径
+        index：指定了index的路径
+        idDict：指定了词典文件的路径
+        provcity：指定了城市编码的路径
+    -->
+    <indexLib>
+        <profile path="/whereami/rundata/profile" />
+        <index path="/whereami/rundata/index" />
+        <idDict path="/whereami/rundata/dict" />
+        <provcity path="/whereami/etc/provcity.txt" />
+    </indexLib>
+
+    <!--
+    说明:
+    sample_statistic_limit: 统计最大抽样次数
+    sample_statistic_max_count：统计抽样步长
+    -->
+    <statistic sample_statistic_limit="1000"
+        sample_statistic_max_count="200">
+    </statistic>
+    <search> 
+        <fields>
+        </fields>
+    </search>
+    <queryParser>
+	<qp_tokenizer_conf path="" ws_type="SCWS" />
+	<qp_stopword_path path="/whereami/etc/stopwords.txt" />
+	<packages>
+	<package name="phrase" need_tokenize="yes" /> 
+	</packages>
+        <qp_blender>
+            <qp_argumet name="q" dest="sort"/>
+            <qp_argumet name="o" dest="search"/>
+            <qp_argumet name="nk" dest="search"/>
+            <qp_argumet name="nid" dest="search"/>
+            <qp_argumet name="filter" dest="filter"/>
+            <qp_argumet name="statistic" dest="statistic"/>
+            <qp_argumet name="ps" dest="sort"/>
+            <qp_argumet name="_ps" dest="sort"/>
+            <qp_argumet name="ss" dest="sort"/>
+            <qp_argumet name="_ss" dest="sort"/>
+            <qp_argumet name="s" dest="other,sort"/>
+            <qp_argumet name="n" dest="other,sort"/>
+            <qp_argumet name="outfmt" dest="other"/>
+        </qp_blender>
+        <qp_searcher>
+	<qp_argumet name="ksq" field="phrase" dest="syntax" parser="syntax_keyword_parser" priority="5"/>
+	<qp_argumet name="nid" field="nid" dest="syntax" parser="syntax_multivalue_parser"/>
+        </qp_searcher>
+    </queryParser>
+</modules>
+

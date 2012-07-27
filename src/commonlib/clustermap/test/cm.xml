@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<clustermap>	
+  
+  <blender_list>
+  	<blender_cluster name=b1 level=1>
+  		<blender ip=127.0.0.1 port=9911 protocol=tcp/>
+  		<blender ip=127.0.0.1 port=9912 protocol=tcp/>
+  	</blender_cluster>
+  </blender_list>
+  
+  <merger_list>
+  	<merger_cluster name=m1 level=1>
+  		<merger ip=127.0.0.1 port=8811 protocol=tcp/>
+  		<merger ip=127.0.0.1 port=8812 protocol=tcp/>
+  	</merger_cluster>
+  	<merger_cluster name=m2 level=1>
+  		<merger ip=127.0.0.1 port=8821 protocol=tcp/>
+  		<merger ip=127.0.0.1 port=8822 protocol=tcp/>
+  	</merger_cluster>
+  </merger_list>
+  
+  <search_list>
+  	<search_cluster name=c1 docsep=false level=1>
+  		<search ip=127.0.0.1 port=7711 protocol=tcp type=mix/>
+  		<search ip=127.0.0.1 port=7712 protocol=tcp type=mix/>
+  		<search ip=127.0.0.1 port=7713 protocol=tcp type=mix/>
+  	</search_cluster>
+  	<search_cluster name=c2 docsep=true level=1>
+  		<search ip=127.0.0.1 port=7721 protocol=tcp type=search/>
+  		<search ip=127.0.0.1 port=7722 protocol=tcp type=search/>
+  		<search ip=127.0.0.1 port=7723 protocol=tcp type=doc/>
+  		<search ip=127.0.0.1 port=7724 protocol=tcp type=doc/>
+  		<search ip=127.0.0.1 port=7725 protocol=tcp type=mix/>
+  		<search ip=127.0.0.1 port=7726 protocol=tcp type=mix/>
+  	</search_cluster>
+  	<search_cluster name=c3 level=1>
+  		<search ip=127.0.0.1 port=7731 protocol=tcp type=search/>
+  		<search ip=127.0.0.1 port=7732 protocol=tcp type=search/>
+  		<search ip=127.0.0.1 port=7733 protocol=tcp type=doc/>
+  		<search ip=127.0.0.1 port=7734 protocol=tcp type=doc/>
+  	</search_cluster>
+  	<search_cluster name=c4 level=1>
+  		<search ip=127.0.0.1 port=7741 protocol=tcp type=search/>
+  		<search ip=127.0.0.1 port=7742 protocol=tcp type=doc/>
+  		<search ip=127.0.0.1 port=7743 protocol=tcp type=doc/>
+  	</search_cluster>
+  	<search_cluster name=c5 level=1>
+  		<search ip=127.0.0.1 port=7751 protocol=tcp type=search/>
+  		<search ip=127.0.0.1 port=7752 protocol=tcp type=search/>
+  		<search ip=127.0.0.1 port=7753 protocol=tcp type=doc/>
+  	</search_cluster>       
+  </search_list>	
+  
+  <merger_cluster_list>
+    <merger_cluster name=m1>
+        <search_cluster name=c1/>
+        <search_cluster name=c2/>
+    </merger_cluster>
+    <merger_cluster name=m2>
+      	<search_cluster name=c3/>
+      	<search_cluster name=c4/>
+      	<search_cluster name=c5/>
+    </merger_cluster>
+  </merger_cluster_list>
+  
+  <blender_cluster_list>	
+    <blender_cluster name=b1>
+        <merger_cluster name=m1/>
+        <merger_cluster name=m2/>
+    </blender_cluster>	
+  </blender_cluster_list>
+	
+</clustermap>

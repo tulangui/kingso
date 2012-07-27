@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<ks>
+    <stopword dict="/whereami/etc/stopwords.txt" />
+    <wrapper dict="/whereami/etc/wrapper.dict" />
+    <provcity dict="/whereami/etc/provcity.txt" />
+    <aliws conf_path="/whereami/aliws/conf/AliTokenizer.conf" ws="TAOBAO_CHN" />
+<index>
+        <package name="vidname" fields="title:0:1,vidname:128:0" />
+		<field name="title" index_type="text" allow_null="n" gbk2utf8="y" />
+
+</index>
+<profile sub_dir="profile" package="true">
+    <package>
+        <group fields="starts reserve_price" />
+    </package>
+	<bit_record name="bit_record" multi_num="1"  compress="N" load_type="AT_PRELOAD" > 
+		<field name="assure" index_type="str" value_type="AT_UINT32" bit_len="1" encode="false" flag="NO_FLAG" />
+	</bit_record>
+	<field name="biz30day" index_type="str" value_type="AT_INT32" multi_num="1"  compress="N" load_type="AT_PRELOAD" />
+</profile>
+<detail>
+		<field name="title"  index_type="str"   gbk2utf8="y" />
+</detail>
+</ks>

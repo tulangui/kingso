@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+   说明：定义了默认的比较字段及排序顺序，可以定义多个比较对象，一个compare段定义一种比较对象 
+   Name（compare）：比较对象的名称（不能与别的比较对象重复） 
+   Name（field）：比较字段的名称（“relevance”指相关性排序） 
+   order（field）：对该字段的默认排序顺序（ DESCENDING ：降序、 ASCENDING ：升序） 
+   Queryparam（field）：参数名称（例如：ps、ss）
+-->
+<compares>
+    <compare name="COMPARE1" >
+        <field name="relevance" order="DESCENDING" queryparam="ps" />
+        <field name="docid" order="DESCENDING" />
+    </compare>
+</compares>
+
+<!--
+   说明： 
+   定义了不同排序方式（比如uniq、heapsort）的参数特征，当访问query满足该特征时（符合condition定义），会把相应的排序对象加到排序链条中 
+   Application： 
+   Name：排序对象的名称（不可以重复） 
+   Type：排序对象的类型 （uniq、heapsort。。。。。） 
+   Compare：该排序对象使用的比较对象 （需要与compare段中的名称一致） 
+   Final：取值为true时，表示是最后一个排序对象。
+   Condition： 
+   Type：目前只支持对查询参数的条件设置，既只能为 param 
+   Name：参数的名称。 可支持“|”或的关系。  Ps|ss  的含义是如果ps或ss的取值为value时，均满足该条件。当name的取值为*时，表示都满足该条件。 
+-->
+<applications>
+    <application name="HeapSort" type="HeapSort" final="true" compare="COMPARE1">
+        <condition type="param" name="*" />
+    </application>
+</applications>
+
+
+<!--
+   说明： 
+   Sort：定义了排序链条 
+   Attr：定义了该排序链条的属性，目前只有truncate这一种
+-->
+<customs>
+    <custom param="sort" sort="HeapSort" attr="truncate"/>
+</customs>

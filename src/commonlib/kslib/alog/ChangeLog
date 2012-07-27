@@ -1,0 +1,110 @@
+2012-05-23	JianHao    <jianhao@taobao.com>
+ALOG 1.1.0
+* fix bug of #169781: alog cache_limit功能问题
+* 解决因为alog配置cache_limit后导致的latency波动
+
+2011-9-30	LiJinHui    <jinhui.li@aliyun-inc.com>
+ALOG 1.1.0
+* fix bug of #69580: core dump when initializing static logger object in shared library.
+* add '__attribute__' for log() function, which can tell compiler to verify the format of parameter.
+
+2011-7-29	LiJinHui    <jinhui.li@aliyun-inc.com>
+ALOG 1.0.10
+* fix bug of #108956: core dump when configurated a wrong log level in configuration file.
+* new feature: recycle the history log file.
+
+2010-5-6	YangBingbing    <bingbing.yang@alibaba-inc.com>
+ALOG 1.0.7
+* fix bug of #29448: alog依赖zlib，但没有加入编译选项
+
+2010-5-6	YangBingbing    <bingbing.yang@alibaba-inc.com>
+ALOG 1.0.7
+* fix bug of #33186: 使用iauto重复编译安装alog出错
+
+2010-5-6	YangBingbing    <bingbing.yang@alibaba-inc.com>
+ALOG 1.0.7
+* fix bug of #28518: alog::Logger::flushAll()函数在log shutdown之后调用会core dump
+
+2010-5-6	YangBingbing    <bingbing.yang@alibaba-inc.com>
+ALOG 1.0.7
+* fix bug of #47117: 日志记录和轮转时，不使用page cache
+
+2010-5-6	YangBingbing    <bingbing.yang@alibaba-inc.com>
+ALOG 1.0.7
+* fix bug of #42784: alog日志轮转的文件大小限制不能超过4G
+
+2009-8-10	YangBingbing	<bingbing.yang@alibaba-inc.com>
+ALOG 1.0.6 release candidate 1
+* fix bug of #16798: Optimize logger level inherit logic.
+* fix bug of #23323: Correct logger lock scope.
+* fix bug of #26752: Make auto test output temp file in user's directory.
+* fix bug of #27390: Fix twice shutdown core dump bug.
+
+2009-5-11	YangBingbing	<bingbing.yang@alibaba-inc.com>
+ALOG 1.0.5 release candidate 3
+* fix bug of #21720: In Appender.cpp, remove debug code of 'sleep(2)' in
+compressLog function.
+
+2009-5-5	YangBingbing	<bingbing.yang@alibaba-inc.com>
+ALOG 1.0.5 release candidate 2
+* refix bug of #20853: In log rotate logic, add compress function, autoflush
+if need to rotate, add delay time control of rotation.
+
+2009-5-4	YangBingbing	<bingbing.yang@alibaba-inc.com>
+ALOG 1.0.5 release candidate 1
+* fix bug of #19504: Add #include <sys/syscall.h> in LoggingEvent.h
+* fix bug of #20851: Add message in console when file appender open fail.
+* fix bug of #20853: Add log rotate.
+
+2009-4-1	YangBingbing	<bingbing.yang@alibaba-inc.com>
+ALOG 1.0.4 release candidate 2
+* fix a bug: the header files in src/include path should not refer to any file
+not in this path. (FIXED)
+
+2009-3-26	YangBingbing	<bingbing.yang@alibaba-inc.com>
+ALOG 1.0.4 release candidate 1
+* fix bug of #15983: Add user-defined out put format.
+* fix bug of #17995: Add auto flush configure item. (FIXED)
+* support large file write on 32 bit system
+* modify thread id format from pthread_self to syscall gettid
+
+2009-2-25	YangBingbing	<bingbing.yang@alibaba-inc.com>
+ALOG 1.0.3 release candidate 2
+* refix bug of #16296: add log level inherit logic. if level is not set, the
+first level set parent's log level will be inherited. (FIXED)
+* change log level logic in test case.
+
+2009-2-18	YangBingbing	<bingbing.yang@alibaba-inc.com>
+ALOG 1.0.3 release candidate 1
+* fix bug of #16296: always check current logger's level to log. parent's
+level will not be check. (FIXED)
+* change log level logic in test case.
+
+2009-2-10	YangBingbing	<bingbing.yang@alibaba-inc.com>
+ALOG 1.0.2 release candidate 3
+* fix bugs in make package
+* fix bug of #15982: always output child's logger name
+
+2009-2-6	YangBingbing	<bingbing.yang@alibaba-inc.com>
+ALOG 1.0.2 release candidate 2
+* remove prefix default path in configure.in
+* add alog.spec.in to svn
+
+2009-2-6	YangBingbing	<bingbing.yang@alibaba-inc.com>
+ALOG 1.0.2 release candidate 1
+* add TRACE1 TRACE2 and TRACE3 log level
+* add rpm build
+* remove release version from package name
+
+2009-1-16	YangBingbing	<bingbing.yang@alibaba-inc.com>
+ALOG 1.0.1 release candidate 1
+* add DISABLE and WARN log level
+* use %p to print tid
+
+2009-1-12	YangBingbing	<bingbing.yang@alibaba-inc.com>
+ALOG 1.0.0 release candidate 2
+* add Doxyfile.in to package.
+* fix package make bug: StringUtil.h and Properties.h was not packaged.(FIXED)
+
+
+

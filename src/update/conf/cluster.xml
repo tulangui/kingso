@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cluster>
+    <dispatcher>
+        <node ip="10.234.4.3" port="9999" />
+    </dispatcher>
+    <search_list>
+        <col id="1">
+            <node ip="10.234.4.14" port="1" />
+        </col>
+    </search_list>
+    <doc_list>
+        <col id="1">
+            <node ip="10.234.4.12" port="1" />
+        </col>
+    </doc_list>
+</cluster>
+

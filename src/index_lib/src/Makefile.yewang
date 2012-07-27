@@ -1,0 +1,41 @@
+ROOTPATH=/home/yewang
+
+LDPATH=\
+	-L. \
+	-L/usr/lib64/ \
+	-L$(ROOTPATH)/install_commonlib/lib/
+
+INCLUDE=\
+	-I. \
+	-I/usr/include/ \
+	-I$(ROOTPATH)/install_commonlib/include/ \
+	-I../ \
+	-I../include \
+	-I/usr/local/include \
+	-I./index \
+	-I$(ROOTPATH)/kingso/project/commdef/trunk/include
+
+
+CFLAG = -c -g -Wall  -fkeep-inline-functions -DDEBUG
+
+GCC = g++
+CC = gcc
+.SUFFIXES: .o .cpp .c .pb.cc
+
+.cpp.o:
+	$(GCC) $(CFLAG)  $(INCLUDE) $(UNIT_TEST) -o $@ $<
+
+
+all: DocIdManager.o DocIndexMessage.o IncManager.o IndexLib.o ProvCityManager.o varint.o
+
+	
+varint.o: varint.cpp
+DocIdManager.o: DocIdManager.cpp
+DocIndexMessage.o: DocIndexMessage.pb.cc
+	$(GCC) $(CFLAG) $(INCLUDE)  -o $@ $< 
+IncManager.o: IncManager.cpp
+IndexLib.o: IndexLib.cpp
+ProvCityManager.o: ProvCityManager.cpp
+
+clean:
+	rm -f *.o

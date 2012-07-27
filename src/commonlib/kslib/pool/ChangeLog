@@ -1,0 +1,42 @@
+2011-05-12  Wang Wei   <santai.ww@taobao.com>
+* MemPool::alloc() return NULL if above Memory Limit.
+* Fix bug:
+    http://bugfree.corp.alimama.com/Bug.php?BugID=
+	
+2010-03-23  Yang Bingbing   <bingbing.yang@alibaba-inc.com>
+* Fix bug:
+    http://bugfree.corp.alimama.com/Bug.php?BugID=44508
+	
+2009-7-24	Guo Ruijie	<ruijie.guo@alibaba-inc.com>
+* Fix rpm building bugs in high version automake
+	
+2009-7-23	Guo Ruijie	<ruijie.guo@alibaba-inc.com>
+* Add rpm support
+* pool 1.0.2 BETA3 released
+	
+2009-5-11	Guo Ruijie	<ruijie.guo@alibaba-inc.com>
+* Fix a compilation bug in old version libtool
+	
+2009-5-4	Guo Ruijie	<ruijie.guo@alibaba-inc.com>
+* Add MemMonitor class for monitoring memory allocation
+* Fix a bug of PooledSTLAllocator/SimpleSTLAllocator
+	
+2009-3-2	Guo Ruijie	<ruijie.guo@alibaba-inc.com>
+* Add TSS.h for thread-specific storage
+* Add getPool() in ObjectPool 
+
+2009-1-13	Guo Ruijie	<ruijie.guo@alibaba-inc.com>
+* pool 1.0.0 BETA released
+
+2009-1-16 Guo Ruijie <ruijie.guo@alibaba-inc.com>
+* Add SimpleSegregatedPool class, an implementation of simple segregated storage
+* Add SynchronizedSSPool, thread-safe version of SimpleSegregatedPool
+* Add thread-safe related classes,Guard,Mutex etc.
+* Add Singleton class for singleton pool 
+
+2009-1-20 Guo Ruijie <ruijie.guo@alibaba-inc.com>
+* Add SingletonSegregatedPool class, using in PoolAllocator
+* Fix a bug of SimpleSegregatedPool
+* Change SimpleAllocator to SimpleSTLAllocator
+* Change PoolAllocator to PooledSTLAllocator
+* Add perfermance test code for PooledSTLAllocator

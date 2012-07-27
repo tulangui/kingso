@@ -1,0 +1,13 @@
+message DocMessage 
+{
+    required uint64 seq            = 1;   //消息序列号
+    required int64  nid            = 2;   //宝贝nid
+
+    message Field {
+        required bytes field_name  = 1;   //字段名
+        optional bytes field_value = 2;   //字段值
+    }
+
+    repeated Field  fields         = 3;   //多个字段
+    required uint32 action         = 4;   //操作命令（增、删、改），全量dump后的增量恢复通知
+}

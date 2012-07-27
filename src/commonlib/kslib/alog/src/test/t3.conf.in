@@ -1,0 +1,11 @@
+alog.rootLogger=DEBUG, A2
+alog.logger.sub1=INFO, A1 
+alog.logger.sub2=INFO
+alog.logger.sub1.sub2=INFO, A1, A2
+inherit.sub1=false
+
+alog.appender.A1=FileAppender
+alog.appender.A1.fileName=@ALOG_TOP_BUILD_DIR@/configuretest3-1.log
+
+alog.appender.A2=FileAppender
+alog.appender.A2.fileName=@ALOG_TOP_BUILD_DIR@/configuretest3-2.log

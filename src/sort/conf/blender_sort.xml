@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<modules>
+    <module name="taobaomlr" file="/home/admin/kingso/taobao_up/lib/libUPRanking.so" />
+</modules>
+
+<compares>
+    <compare name="COMPARE1" >
+        <field name="relevance" order="DESCENDING" queryparam="ps" />
+        <field name="ends" order="ASCENDING" queryparam="ss" />
+        <field name="docid" order="DESCENDING" />
+    </compare>
+    <compare name="COMPARE2" >
+        <field name="ends" order="DESCENDING" queryparam="ps" />
+        <field name="ends" order="ASCENDING" queryparam="ss" />
+        <field name="docid" order="DESCENDING" />
+    </compare>
+    <compare name="COMPARE4" >
+        <field name="relevance" order="DESCENDING" queryparam="ps" />
+        <field name="ends" order="ASCENDING" queryparam="ss" />
+        <field name="docid" order="ASCENDING" />
+    </compare>
+</compares>
+
+<applications>
+
+    <application name="MultiScoreRewriter" type="MultiScoreRewriter" profile1="reserve_price" profile2="promotions" factor="0.0001" sortfield="reserve_price" compare="COMPARE1">
+        <condition type="param" name="ps|ss" value="reserve_price" />
+        <condition type="param" name="sort" value="price_sum" />
+    </application>
+
+    <application name="MultiScoreRewriter" type="MultiScoreRewriter" profile1="reserve_price" profile2="promotions" factor="0.0001" sortfield="reserve_price" compare="COMPARE1">
+        <condition type="param" name="ps|ss" value="reserve_price" />
+        <condition type="param" name="sort" value="discount_price" />
+    </application>
+
+    <application name="PostageAddScoreRewriter" type="PostageAddScoreRewriter" postage_field="real_post_fee" compare="COMPARE1">
+        <condition type="param" name="ps|ss" value="reserve_price" />
+        <condition type="param" name="sort" value="price_sum" />
+    </application>
+
+    <application name="FirstAudition" type="FirstAudition" dynamicload="y"  psweight="1" mlrfield="category" mindocs="3000" compare="COMPARE1">
+        <condition type="param" name="mlrscore" />
+	<condition type="param" name="advsort" value="advtaobao"/>
+    </application>
+
+    <application name="TaobaoWeightBlender" type="TaobaoWeightBlender" compare="COMPARE1">
+        <condition type="param" name="rankfield" />
+        <condition type="param" name="rankvalue" />
+    </application>
+
+    <application name="RelevanceSort" type="ReleSort" domlr="y" area="auction" conf="/home/admin/kingso/taobao_up/conf/FE.conf" step1_rank="0" mempool_size="4096" feature_field="mlr_features" auxfields="provcity assure isprepay category reserve_price static_trans_score tk_rate seller_rank_score promoted_service static_trans_score2 seller_rank_score2 static_trans_score3  seller_rank_score3 nid  tk_score etaotype biz30day spuid user_id" auxsegs="" bauxfields="" multiples="1" topdocs="3000" boosts="10000000" dlname="taobaomlr" api_names="parameter" field_encoding="gbk" doQuerySeg="0"  PreLoadProfile="1" compare="COMPARE1">
+            <condition type="param" name="advsort" value="advtaobao" />
+    </application>
+
+
+	<application name="SimpleUniqueSort" type="SimpleUniqueSort" uniqmaxcount="10000" compare="COMPARE1">
+			<condition type="param" name="uniqfield" />
+            <condition type="noparam" name="uniqinfo" />
+    </application>
+
+	<application name="UniqIISort" type="UniqIISort" uniqfield="user_id" uniqmaxcount="10000" compare="COMPARE1">
+			<condition type="param" name="uniqfield" />
+			<condition type="param" name="uniqinfo" />
+    </application>
+
+	<application name="DefaultRuleSort" type="DefaultRuleSort" final="true" pageDocNum="40" compare="COMPARE4">
+			<condition type="param" name="distfield" />
+			<condition type="param" name="distcnt" />
+    </application>
+
+    <application name="HeapSort2D"  type="HeapSort2D" final="true" max_topn="135" compare="COMPARE1">
+        <condition type="param" name="topn" />
+    </application>
+
+	<application name="HeapSort" type="HeapSort" final="true" compare="COMPARE1">
+        <condition type="param" name="*" />
+    </application>
+</applications>
+
+<customs>
+    <custom param="sort" value="cjbt" sort="FirstAudition RelevanceSort HeapSort DefaultRuleSort SimpleUniqueSort HeapSort" />
+</customs>

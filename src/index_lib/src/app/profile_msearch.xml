@@ -1,0 +1,62 @@
+<?xml version="1.0" ?>
+
+<globals name="globals" root="/home/admin/kingso_index_lib/" />
+
+<dict sub_dir="dict" />
+<profile sub_dir="profile" package="true" >
+	<package>
+		<group fields="starts reserve_price" />
+		<group fields="bit_record biz30day" />
+	</package>
+
+	<bit_record name="bit_record" multi_num="1"  compress="N" load_type="AT_PRELOAD" > 
+		<field name="assure" value_type="AT_UINT32" bit_len="1" encode="false" flag="NO_FLAG" />
+		<field name="isprepay" value_type="AT_UINT32" bit_len="1" encode="false" flag="NO_FLAG" />
+		<field name="lp_rate" value_type="AT_UINT32" bit_len="10" encode="false" flag="NO_FLAG" />
+		<field name="commend" value_type="AT_UINT32" bit_len="3" encode="false" flag="NO_FLAG" />
+		<field name="isnewest" value_type="AT_UINT32" bit_len="2" encode="false" flag="NO_FLAG" />
+		<field name="ratesum" value_type="AT_UINT32" bit_len="5" encode="false" flag="NO_FLAG" />
+		<field name="user_type" value_type="AT_UINT32" bit_len="6" encode="false" flag="NO_FLAG" />		
+		<field name="tk_rate" value_type="AT_UINT32" bit_len="14" encode="false" flag="NO_FLAG" />
+		<field name="seller_goodrat" value_type="AT_UINT32" bit_len="14" encode="false" flag="NO_FLAG" />
+		<field name="etaotype" value_type="AT_UINT32" bit_len="2" encode="false" flag="NO_FLAG" />
+	</bit_record>
+
+	<field name="biz30day" value_type="AT_INT32" multi_num="1"  compress="N" load_type="AT_PRELOAD" />
+	<field name="category" value_type="AT_INT32" multi_num="1"  compress="N" load_type="AT_PRELOAD" />
+	<field name="seller_rank_score" value_type="AT_INT32" multi_num="1"  compress="N" load_type="AT_PRELOAD" />
+	<field name="seller_rank_score2" value_type="AT_INT32" multi_num="1"  compress="N" load_type="AT_PRELOAD" />
+	<field name="seller_rank_score3" value_type="AT_INT32" multi_num="1"  compress="N" load_type="AT_PRELOAD" />
+	<field name="spuid" value_type="AT_INT32" multi_num="1"  compress="N" load_type="AT_PRELOAD" />
+	<field name="starts" value_type="AT_UINT32" multi_num="1"  compress="N" load_type="AT_PRELOAD" />
+	<field name="static_trans_score" value_type="AT_INT32" multi_num="1"  compress="N" load_type="AT_PRELOAD" />
+	<field name="static_trans_score2" value_type="AT_INT32" multi_num="1"  compress="N" load_type="AT_PRELOAD" />
+	<field name="static_trans_score3" value_type="AT_INT32" multi_num="1"  compress="N" load_type="AT_PRELOAD" />
+	<field name="user_id" value_type="AT_INT32" multi_num="1"  compress="N" load_type="AT_PRELOAD" />
+	<field name="nid" value_type="AT_INT64" multi_num="1"  compress="N" load_type="AT_PRELOAD" />
+	<field name="pid" value_type="AT_INT64" multi_num="1"  compress="N" load_type="AT_PRELOAD" />
+	<field name="fast_post_fee" value_type="AT_FLOAT" multi_num="1"  compress="N" load_type="AT_PRELOAD" />
+	<field name="reserve_price" value_type="AT_DOUBLE" multi_num="1"  compress="N" load_type="AT_PRELOAD" />
+	<field name="tk_trans_score" value_type="AT_INT32" multi_num="1"  compress="N" load_type="AT_PRELOAD" />
+	<field name="tk_total_commi" value_type="AT_FLOAT" multi_num="1"  compress="N" load_type="AT_PRELOAD" />
+	<field name="tk_total_sales" value_type="AT_INT32" multi_num="1"  compress="N" load_type="AT_PRELOAD" />
+	<field name="mod_volume30day" value_type="AT_FLOAT" multi_num="1"  compress="N" load_type="AT_PRELOAD" />
+	<field name="mod_price" value_type="AT_FLOAT" multi_num="1"  compress="N" load_type="AT_PRELOAD" />
+	<field name="unit_price" value_type="AT_FLOAT" multi_num="1"  compress="N" load_type="AT_PRELOAD" />
+	<field name="tk_score" value_type="AT_FLOAT" multi_num="1"  compress="N" load_type="AT_PRELOAD" />
+	<field name="ss_score" value_type="AT_INT32" multi_num="1"  compress="N" load_type="AT_PRELOAD" />
+
+	<!-- 用 psbit 与 promoted_service 是同一个值,psbit 是 promoted_service 按位拆出来的 ,因为目前线上是以 psbit 作为索引名,所以以 psbit 命名  -->
+	<field name="promoted_service" value_type="AT_UINT8" multi_num="1"  compress="N" load_type="AT_PRELOAD" flag="F_FILTER_BIT"/>
+	<field name="nick" value_type="AT_UINT64" multi_num="1"  compress="N" load_type="AT_PRELOAD" />
+	<field name="provcity" value_type="AT_UINT16" multi_num="1"  compress="N" load_type="AT_PRELOAD" flag="F_PROVCITY"/>
+
+	<field name="ends" value_type="AT_UINT32" multi_num="2"  compress="N" load_type="AT_PRELOAD"  />
+	<field name="spugroupid" value_type="AT_UINT32" multi_num="0"  compress="N" load_type="AT_PRELOAD" />
+	<field name="cat_id_path" value_type="AT_UINT32" multi_num="0"  compress="N" load_type="AT_PRELOAD" />
+	<field name="catmap" value_type="AT_UINT32" multi_num="0"  compress="N" load_type="AT_PRELOAD" />
+	<field name="prop_vid" value_type="AT_INT64" multi_num="0"  compress="N" load_type="AT_PRELOAD"  />
+	<!-- 使用update_overlap="false"标识该字段不支持更新排重功能 -->
+	<field name="mlr_features" value_type="AT_INT32" multi_num="0"  compress="N" update_overlap="false" load_type="AT_PRELOAD"  />
+	<field name="real_post_fee" value_type="AT_STRING" multi_num="0"  compress="N" load_type="AT_PRELOAD" flag="F_REALPOSTFEE" />
+</profile>

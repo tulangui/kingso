@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cache max_key_length="2048" key_compress="md5" max_value_length="1000000" val_compress="z" expire_time="600" ignore="src= mcn= et= !et= gid=" connect_timeout="2" snd_timeout="2000" rcv_timeout="2000">
+    <server ip="10.234.4.21" port="11211" />
+    <server ip="10.234.4.22" port="11211" />
+    <server ip="10.234.4.23" port="11211" />
+    <server ip="10.234.4.24" port="11211" />
+</cache>

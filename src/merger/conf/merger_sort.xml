@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<modules>
+</modules>
+
+<compares>
+    <compare name="COMPARE1" >
+        <field name="relevance" order="DESCENDING" queryparam="ps" />
+        <field name="docid" order="DESCENDING" />
+    </compare>
+</compares>
+
+<applications>
+    <application name="HeapSort" type="HeapSort" final="true" compare="COMPARE1">
+        <condition type="param" name="*" />
+    </application>
+</applications>
+
+<customs>
+    <custom param="sort" value="" sort="HeapSort" attr="truncate"/>
+</customs>

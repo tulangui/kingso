@@ -1,0 +1,101 @@
+                              ALOG
+
+ALOG 是什么?
+--------------------------------------------------------------------------------
+ALOG 是由ASC引擎组在借鉴LOG4CXX、LOG4CPP日志框架后开发的一套轻量级日志库，
+具备LOG4CXX的基本功能，但性能更高，设计更简单，目前只支持Unix/Linux系统。
+
+
+安装
+--------------------------------------------------------------------------------
+1)./configure --prefix=path/to/installdir
+2)make
+3)make install
+
+
+Logger 和 Appender介绍
+--------------------------------------------------------------------------------
+Logger和Appender是ALOG里面最主要的两个组件：Appender表示输出目标，例如
+ConsoleAppender表示输出目标是Console，FileAppender表示输出目标是文件；
+Logger是日志输出的句柄，由Logger对象来控制输出行为，例如动态调整日志输出等级、
+调整输出目标。
+
+
+Logger对象之间的层次关系
+--------------------------------------------------------------------------------
+1)Logger对象之间存在层次关系，每个Logger有一个父亲，有0个或多个孩子，靠Logger
+的名字来确定他们的层次关系（参考java的package命名方式），并且父Logger的行为
+会被子Logger对象继承（当然，你也可以设置为非继承）。
+	例如：名字为"isearch.search"的Logger对象是名字为"isearch"的Logger对象
+	的孩子，同时又是名字为"isearch.search.filter"的Logger对象的父亲。
+2)系统中存在一个叫root Logger的对象，它的名字是"", 它是所有其他Logger的根，
+它的行为会被所有这些Logger继承
+3)Logger之间层次关系的存在是为了方便细粒度的模块控制，方便各个模块之间Logger
+的行为配置
+
+
+关于配置文件
+--------------------------------------------------------------------------------
+系统支持使用一个配置文件来配置所有Logger的关系和行为，具体的配置方法请参照
+example目录下alog.template.conf文件里的说明。
+另外，配置文件的只是为了能够简化代码的书写和修改，里面的所有配置功能都能
+使用Logger对象的API来完成。
+
+
+调用代码实例
+--------------------------------------------------------------------------------
+/*********** 1) 手动调用Logger的API,更多信息请参考Manual.cpp ******************/
+int main(int argc, char *argv[])
+{
+	//获得root Logger对象
+	Logger* pRoot = Logger::getRootLogger();
+
+	//为root Logger对象设置输出目标为Console
+	pRoot->setAppender(ConsileAppender::getAppender());
+
+	//为root Logger对象添加一个文件输出目标，文件名为"/tmp/alog_example.log"
+	pRoot->addAppender(FileAppender::getAppender("/tmp/alog_example.log"));
+	
+	int processCount = 20;
+	//输出各种日志信息
+	ALOG_DEBUG(pRoot, "debug message, isearch %d", processCount);
+	ALOG_INFO(pRoot, "info message");
+	ALOG_ERROR(pRoot, "error message");
+	ALOG_FATAL(pRoot, "fatal message");
+	
+	//销毁所有的对象
+	Logger::shutdown();
+}
+/******************* 2)使用配置文件简化的调用代码 ****************************/
+int main(int argc, char *argv[])
+{
+	//读取配置文件alog.template.conf，生成Logger
+	Configurator::configureLogger("./example/alog.template.conf");
+
+	//获得配置文件中配置的各个Logger对象句柄
+	Logger* sub1 = Logger::getLogger("sub1");
+	Logger* sub1_sub2 = Logger::getLogger("sub1.sub2");
+	Logger* sub1_sub2_sub3 = Logger::getLogger("sub1.sub2.sub3");
+	
+	//使用各个Logger句柄输出各种日志信息
+	ALOG_DEBUG(sub1, "debug message");
+	ALOG_INFO(sub1_sub2, "info message");
+	ALOG_ERROR(sub1_sub2_sub3, "error message");
+	ALOG_FATAL(alog::getRootLogger(), "fatal message");
+	
+	//销毁所有的对象
+	Logger::shutdown();
+}
+/*****************************************************************************/
+
+
+API文档
+--------------------------------------------------------------------------------
+由Doxygen工具自动生成，在项目的docs目录下；为了方便大家访问，有内网API文档：
+http://cadev20-vm7.asc.cnz.alimama.com:8880/index.html
+
+
+联系方式
+--------------------------------------------------------------------------------
+Brian.lee (jinhui.li@alibaba-inc.com)
+BingBing.yang (bingbing.yang@alibaba-inc.com)

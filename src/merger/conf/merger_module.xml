@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<modules>
+    <outfmt type="xml" />
+    <queryParser>
+        <qp_stopword_path path="/home/admin/kingso/etc/stopwords.txt"/>
+        <qp_blender>
+            <qp_argumet name="q" dest="sort"/>
+            <qp_argumet name="o" dest="syntax"/>
+            <qp_argumet name="nk" dest="syntax"/>
+            <qp_argumet name="nid" dest="syntax"/>
+            <qp_argumet name="filter" dest="filter"/>
+            <qp_argumet name="statistic" dest="statistic"/>
+            <qp_argumet name="ps" dest="sort"/>
+            <qp_argumet name="_ps" dest="sort"/>
+            <qp_argumet name="ss" dest="sort"/>
+            <qp_argumet name="_ss" dest="sort"/>
+            <qp_argumet name="s" dest="other,sort"/>
+            <qp_argumet name="n" dest="other,sort"/>
+            <qp_argumet name="outfmt" dest="other"/>
+        </qp_blender>
+    </queryParser>
+    <sort>
+        <sort_config path="/whereami/etc/merger_sort.xml" />
+    </sort>
+    <statistic>
+    </statistic>
+</modules>
+

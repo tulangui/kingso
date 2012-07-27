@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<index 	path="/whereami/rundata/detail/detail.idx" />
+<data  	path="/whereami/rundata/detail/detail.dat" />
+<model 	path="/whereami/rundata/detail/detail.mdl" />
+<msgcnt path="/whereami/rundata/detail/msgcnt.cnt" />
+<plugin path="/whereami/detail_plugin/" />

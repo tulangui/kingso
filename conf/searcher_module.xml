@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<modules>
+
+    <!--
+        说明:
+        profile: 指定了profile的路径
+        index：指定了index的路径
+        idDict：指定了词典文件的路径
+        provcity：指定了城市编码的路径
+    -->
+    <indexLib>
+        <profile path="/whereami/rundata/profile" />
+        <index path="/whereami/rundata/index" />
+        <idDict path="/whereami/rundata/dict" />
+        <provcity path="/whereami/etc/provcity.txt" />
+    </indexLib>
+
+    <!--
+        说明:
+        sample_statistic_limit: 统计最大抽样次数
+        sample_statistic_max_count：统计抽样步长
+    -->
+    <statistic sample_statistic_limit="1000"
+        sample_statistic_max_count="200">
+    </statistic>
+    <search> 
+        <fields>
+        </fields>
+    </search>
+    <queryParser>
+	<!--
+	    说明:
+	    path: 指定分词器所需配置文件路径
+	    ws_type: 指定分词器类型，目前开源版本指定的SCWS，用户可修改
+	-->
+	<qp_tokenizer_conf path="" ws_type="SCWS" />
+	<!--
+	    说明: 配置查询过程中的stop word文件
+	    path: stop word文件路径
+	-->
+	<qp_stopword_path path="/whereami/etc/stopwords.txt" />
+	<packages>
+	<!--
+	    说明: 配置package段
+	    name: package名称
+	    need_tokenize: 是否需要分词
+	-->
+	<package name="phrase" need_tokenize="yes" /> 
+	</packages>
+        <!--
+            说明: Merger查询语法解析段, 单机版需要配置
+            name: 查询参数名称
+            dest: 查询参数所属的检索模块（search，filter，statistic，sort，other）
+        -->
+        <qp_blender>
+            <qp_argumet name="q" dest="sort"/>
+            <qp_argumet name="o" dest="search"/>
+            <qp_argumet name="nid" dest="search"/>
+            <qp_argumet name="filter" dest="filter"/>
+            <qp_argumet name="statistic" dest="statistic"/>
+            <qp_argumet name="ps" dest="sort"/>
+            <qp_argumet name="_ps" dest="sort"/>
+            <qp_argumet name="s" dest="other,sort"/>
+            <qp_argumet name="n" dest="other,sort"/>
+            <qp_argumet name="outfmt" dest="other"/>
+        </qp_blender>
+        <!--
+            说明: Searcher查询语法解析段
+            name: 查询参数名称 (merger改写后)
+            field: 
+            dest:
+            parser:
+        -->
+        <qp_searcher>
+            <!--qp_argumet name="ksq" field="phrase" dest="syntax" parser="syntax_keyword_parser" priority="5"/>
+            <qp_argumet name="phrase" field="phrase" dest="syntax" parser="syntax_keyword_parser"/-->
+            <qp_argumet name="nid" field="nid" dest="syntax" parser="syntax_multivalue_parser"/>
+        </qp_searcher>
+    </queryParser>
+</modules>
+

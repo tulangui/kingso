@@ -1,0 +1,71 @@
+2009-05-06	Huang Ruihua   	<hua.huangrh@alibaba-inc.com>
+	ANet 0.9.3 release candidate 2
+	* modify soname. Resolve library dependence error.
+
+2009-05-06	Zhang Li	<james.zhang@alibaba-inc.com>
+	ANet 0.9.3 release candidate 1
+	* add  uint32_t getPacketPostedCount() to Connection
+	* add  uint32_t getPacketHandledCount() to Connection
+	
+2009-05-06	Huang Ruihua	<hua.huangrh@alibaba-inc.com>
+	ANet 0.9.2 release candidate 6
+	* fix Bug #28702
+2009-05-06	Zhang Li	<james.zhang@alibaba-inc.com>
+	ANet 0.9.2 release candidate 5
+	* fix Bug #21451
+2009-04-13	Zhang Li	<james.zhang@alibaba-inc.com>
+	ANet 0.9.2 release candidate 4
+	* fix bug #19772. Socket::read() may cause data lost
+	
+2009-04-9	Zhang Li	<james.zhang@alibaba-inc.com>
+	ANet 0.9.2 release candidate 3
+	* add parameter "active" to Socket::getAddr() (socket.cpp, socket.h)
+	* fix bug #19202. anet application crash after fork()
+	* set FD_CLOEXEC flags to all files/sockets in anet 
+	* add  method getPort() (socket.cpp, socket.h)
+	* add  method getIpAddress() (socket.cpp, socket.h)
+	
+2009-03-23	Zhang Li	<james.zhang@alibaba-inc.com>
+	ANet 0.9.2 release candidate 2
+	* fix a bug in httpstreamer.cpp which may cause a false failure when parsing httppacket
+	* assign initial value to all variable when defined (httpstreamer.cpp, socket.cpp, tcpconnection.cpp)
+	* reset auto reconnect number to MAX_RECONNECTING_TIMES after connection established!
+	* add Logger::logTearDown() (log.h, log.cpp)
+	
+2009-03-02	Zhang Li	<james.zhang@alibaba-inc.com>
+	ANet 0.9.2 release candidate 1
+	* add synchronous interface Connection::sendPacket()
+	
+2009-02-27	Zhang Li	<james.zhang@alibaba-inc.com>
+	ANet 0.9.1 release candidate 2
+	* use alog as default logging mechanism
+	* fix bug #17028 which may cause connection broken
+	* add rpm dependency to alog and alog-devel
+	* do unit test while making rpm packages
+	* make Makefile.am simpler and clear
+	* use "make check" instead of "make test" to do unit test
+	* make test cases run on 32-bit linux
+	* remove "using namespace std" from packet.h
+	
+2009-01-08	Zhang Li	<james.zhang@alibaba-inc.com>
+	ANet 0.9.0 release candidate 1
+	* add HTTP Client Support
+	* add default packet related imlementation to make it very easy to build user application base on anet library
+	* better "make install" 
+	* add "make rpm"
+
+	Known Risks:
+	* ticket #153 defect in DataBuffer::readxxx(), need to make sure there is enough data in DataBuffer before read
+	
+2008-12-30      Zhang Li        <james.zhang@alibaba-inc.com>
+	* fix ticket #137: request may be double handled if a timeout event occurs just before handlepacket() return in r/w thread
+	  relative method Connection::handlePacket()
+	* fix ticket #133. ChannelPool::allocChannel() will allocate too channel with same channel id after each 268435455 allocations
+	  relative method ChannelPool::allocChannel()
+	* add promoting scheduling priority option to read/writh thread
+	  relative method Thransport::Transport(), Transport::start(),  Thransport::run()
+	
+2008-10-13	Zhang Li	<james.zhang@alibaba-inc.com>
+* Import from http://svn.corp.alimama.com/repos/ASC/DEV/anet/tags/anet_V_0_1_RELEASE
+
+

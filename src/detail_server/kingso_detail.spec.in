@@ -1,0 +1,58 @@
+%define _topdir         %(pwd)/rpmbuild
+
+%define name      kingso_detail
+%define summary   KINGSO_DETAIL is an user query system for Alibaba-inc.
+%define version   @KINGSO_DETAIL_MAJOR_VERSION@.@KINGSO_DETAIL_MINOR_VERSION@.@KINGSO_DETAIL_MICRO_VERSION@
+%define release   @KINGSO_DETAIL_RELEASE@
+%define license   TaoBao
+%define group     Libraries
+%define source    SOURCE/kingso_detail-%{version}.tar.gz
+%define url       http://searchwiki.taobao.ali.com/index.php/Kingso_0.0.1.0
+%define vendor    Engine Team, TaoBao, Alibaba
+%define packager  @USER@@@HOSTNAME@
+%define _prefix   @prefix@
+%define withopt   @WITHPROTOBUF@ @WITHLIBDETAIL@ @WITHUPDATE@ @WITHANALYSIS@ @WITHCLUSTERMAP@ @WITHMXML@ @WITHALOG@ @WITHANET@ @WITHPOOL@ @WITHUTIL@ @WITHCOMMDEF@ @WITHFRAMEWORK@ @WITHINDEXLIB@ @WITHQUERYPARSER@ @WITHSEARCH@ @WITHWANGWANGONLINE@ @WITHONLINEREADER@ @WITHSTATISTIC@ @WITHSORT@ @WITHSIMON@
+
+%define _tmppath        %{_topdir}/tmp
+%define buildroot       %{_tmppath}/%{name}-root
+
+Name:      %{name}
+Version:   %{version}
+Release:   %{release}
+Packager:  %{packager}
+Vendor:    %{vendor}
+License:   %{license}
+Summary:   %{summary}
+Group:     %{group}
+Source:    %{source}
+URL:       %{url}
+Prefix:    %{_prefix}
+Buildroot: %{buildroot}
+#BuildRequires: autoconf,automake,m4,libtool,libxml2-devel,cppunit,readline,readline-devel,anet = 0.9.3,anet-devel = 0.9.3,alog = 1.0.8,alog-devel = 1.0.8,pool = 1.0.2,pool-devel = 1.0.2,wangwang_online-devel = 1.0.1,wangwang_online = 1.0.1
+
+%description
+This package provides kingso rpm for dev ,for qa , for pe
+
+%prep
+%setup -q
+
+%build
+./configure  @WITHPROTOBUF@ @WITHLIBDETAIL@ @WITHUPDATE@ @WITHANALYSIS@ @WITHCLUSTERMAP@ @WITHMXML@ @WITHALOG@ @WITHANET@ @WITHPOOL@ @WITHUTIL@ @WITHCOMMDEF@ @WITHFRAMEWORK@ @WITHINDEXLIB@ @WITHQUERYPARSER@ @WITHSEARCH@ @WITHWANGWANGONLINE@ @WITHONLINEREADER@ @WITHSTATISTIC@ @WITHSORT@ @WITHSIMON@
+make
+make check
+
+%install
+%{__rm} -rf %{buildroot}
+%makeinstall
+
+%clean
+%{__rm} -rf %{buildroot}
+
+%files
+%defattr(-,root,root)
+%config %{_prefix}/etc/detail_updater.cfg
+%config %{_prefix}/etc/detail_server.cfg
+%config %{_prefix}/etc/detail_log.cfg
+%config %{_prefix}/etc/detail_module.xml
+%{_bindir}/ks_detail_server
+

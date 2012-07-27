@@ -1,0 +1,70 @@
+%define _topdir         %(pwd)/rpmbuild
+
+%define name      @PACKAGE@
+%define summary   %{name} is a memory and object pool for Alibaba-inc.
+%define version   @POOL_MAJOR_VERSION@.@POOL_MINOR_VERSION@.@POOL_MICRO_VERSION@
+%define release   @POOL_RELEASE@
+%define license   Commercial
+%define group     Libraries
+%define source    SOURCE/@PACKAGE@-%{version}.tar.gz
+%define url       http://asc.alibaba-inc.com/wiki/index.php/ISearch%E5%9F%BA%E7%A1%80%E5%BA%93%E5%86%85%E5%AD%98%E5%BA%93
+%define vendor    Engine Team, ASC, Alibaba
+%define packager  @USER@@@HOSTNAME@
+%define _prefix   @prefix@
+
+%define _tmppath        %{_topdir}/tmp
+%define buildroot       %{_tmppath}/%{name}-root
+
+Name:      %{name}
+Version:   %{version}
+Release:   %{release}
+Packager:  %{packager}
+Vendor:    %{vendor}
+License:   %{license}
+Summary:   %{summary}
+Group:     %{group}
+Source:    %{source}
+URL:       %{url}
+Prefix:    %{_prefix}
+Buildroot: %{buildroot}
+
+%description
+
+%package devel
+Summary: Header files, libraries and development documentation for %{name}.
+Group: %{group}
+Requires: %{name} = %{version}-%{release} 
+
+%description devel
+This package contains the header files, static libraries and development
+documentation for %{name}. If you like to develop programs using %{name},
+you will need to install %{name}-devel.
+
+
+%prep
+%setup -q
+
+%build
+%configure
+make
+make check
+
+%install
+%{__rm} -rf %{buildroot}
+%makeinstall
+
+%clean
+%{__rm} -rf %{buildroot}
+
+
+%files devel
+%defattr(-,root,root)
+%{_includedir}/pool
+%{_libdir}/libpool.a
+
+%files
+%defattr(-,root,root)
+%{_libdir}/libpool*.so*
+%{_libdir}/libpool.la
+
+

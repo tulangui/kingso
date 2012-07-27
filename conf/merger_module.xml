@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<modules>
+    <!--默认输出格式，目前支持xml，protobuf-->
+    <outfmt type="xml" />
+    <queryParser>
+        <!--
+            说明: 配置使用的分词器
+            path: 指定分词器所需配置文件路径
+            ws_type: 指定分词器类型，目前开源版本指定的SCWS，用户可修改
+        -->
+    	<qp_tokenizer_conf path="" ws_type="SCWS" />
+        <!--
+            说明: 配置查询过程中的stop word文件
+            path: stop word文件路径
+        -->
+        <qp_stopword_path path="/whereami/etc/stopwords.txt"/>
+        <!--
+            说明: 配置package段
+            name: package名称
+            need_tokenize: 是否需要分词
+        -->
+	<packages>
+	<package name="phrase" need_tokenize="yes"/>
+	</packages>
+        <!--
+            说明: 查询语法解析段
+            name: 查询参数名称
+            dest: 查询参数所属的检索模块（search，filter，statistic，sort，other）
+        -->
+        <qp_blender>
+            <qp_argumet name="q" dest="sort"/>
+            <qp_argumet name="o" dest="search"/>
+            <qp_argumet name="nid" dest="search"/>
+            <qp_argumet name="filter" dest="filter"/>
+            <qp_argumet name="statistic" dest="statistic"/>
+            <qp_argumet name="ps" dest="sort"/>
+            <qp_argumet name="_ps" dest="sort"/>
+            <qp_argumet name="s" dest="other,sort"/>
+            <qp_argumet name="n" dest="other,sort"/>
+            <qp_argumet name="outfmt" dest="other"/>
+        </qp_blender>
+    </queryParser>
+    <sort>
+        <!--merger的sort配置文件所在路径-->
+        <sort_config path="/whereami/etc/merger_sort.xml" />
+    </sort>
+    <statistic>
+    </statistic>
+</modules>

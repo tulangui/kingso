@@ -1,0 +1,214 @@
+/**
+ * blender与merger通信协议，使用protobuf定义：
+ * 1. 除了status字段外，其它的所有信息都是可选的
+ * 2. 不得在此定义基础上增加或删除required字段
+ * 3. 不得在此定义基础上修改字段tag（字段定义里等号后面的数字）
+ * 4. 对于data段里的doc内容，所有的字段值都使用string来表示。
+ **/
+message KSResult
+{
+    required KSResultStatus status = 1;
+    optional KSHeader header = 2;
+    optional KSStatistics stat = 3;
+    optional KSData data = 4;
+    optional KSExtend extend = 5;
+    optional KSDebug debug = 6;
+}
+
+enum KSResultStatus
+{
+    KS_RESULT_OK = 0;                 // OK
+    KS_RESULT_EUNKNOWN= 1;            // Unknow Error
+    KS_RESULT_ETIMEOUT = 2;           // Timeout Error
+    KS_RESULT_EINVAL = 3;             // Invalid Query
+    KS_RESULT_EBUSY = 4;              // service busy
+}
+
+/**
+ * 头信息
+ **/
+message KSHeader
+{
+    required uint32 docs_return = 1;
+    required uint32 docs_found = 2;
+    required uint32 docs_total = 3;
+    required uint32 time_used = 4;
+    optional uint32 docs_restrict = 5;
+}
+
+/**
+ * 统计段
+ * query里可以指定多个统计条件，对应此处也就会有多条结果。
+ **/
+message KSStatistics
+{
+    repeated KSStatistic records = 1;
+}
+
+/**
+ * 统计项
+ * query里指定的一个统计字段对应一个统计项
+ **/
+message KSStatistic
+{
+    required string field_name = 1;
+
+    message Pair
+    {
+        required string key = 1;
+        required uint32 count = 2;
+    }
+
+    repeated Pair pairs = 2;
+}
+
+/**
+ * 一个Document就是多个字段值，需要配合字段名来使用。不可单独使用
+ * 注意field_values值的个数必须与字段名的个数一致
+ * 如果一个document的某个字段的值为空，需要add一个空的字符串以占位：add_field_values("")
+ **/
+message KSDocument
+{
+    repeated bytes field_values = 1;
+}
+
+/**
+ * 数据段
+ * 多个Document的集合，field_names里的字段名与每个Document里的字段值一一对应
+ * docs里值的个数应该与Header里的docs_return一致
+ **/
+message KSData
+{
+    repeated string field_names = 1;
+    repeated KSDocument docs = 2;
+}
+
+/**
+ * 扩展段
+ * 目前主要用于UniqII（按店铺展示）：在按卖家合并后，同一卖家店铺内返回多个doc
+ * 一个卖家在此为一个Group，一个Group内可以有多个Document。
+ * 这里的一个卖家与Data段里的每个Document一一对应，所以同样这里groups值的个数应该与Header里的docs_return一致
+ *
+ * 如果要求一个卖家返回3个结果（infotype=5,count=3），则一个Group里的docs最多会有3个Document，最少0个
+ *
+ * E.g.
+ * 合并卖家后对同一卖家，
+ * 返回该卖家店铺内4件宝贝的title,nid,pict_url字段，
+ * 统计该店铺内所有宝贝reserve_price平均值，
+ * 统计该店铺内所有宝贝biz30day的总和
+ * Query:
+ * <code>
+ *     uniqinfo=field=title,count=4,infotype=5;field=nid,count=4,infotype=5;field=reserve_price,count=1,infotype=2;\
+ *                field=biz30day,count=1,infotype=1;field=pict_url,count=4,infotype=5;
+ * </code>
+ *
+ * Output:
+ * <code>
+ *      KSExtend extend;
+ *
+ *      extend.add_field_names("title");
+ *      extend.add_field_names("nid");
+ *      extend.add_field_names("pict_url");
+ *      extend.add_stat_field_names("reserve_price");
+ *      extend.add_stat_types(2);
+ *      extend.add_stat_field_names("biz30day");
+ *      extend.add_stat_types(1);
+ *
+ *      // first user(group): 4 docs both doc and stat
+ *      group = extend.add_groups();
+ *      // doc 1
+ *      doc = group->add_docs();
+ *      doc->add_field_values("user_1 doc_1 title");
+ *      doc->add_field_values("user_1 doc_1 nid");
+ *      doc->add_field_values("user_1 doc_1 pict_url");
+ *      // doc 2
+ *      doc = group->add_docs();
+ *      doc->add_field_values("user_1 doc_2 title");
+ *      doc->add_field_values("user_1 doc_2 nid");
+ *      doc->add_field_values("user_1 doc_2 pict_url");
+ *      // doc 3
+ *      doc = group->add_docs();
+ *      doc->add_field_values("user_1 doc_3 title");
+ *      doc->add_field_values("user_1 doc_3 nid");
+ *      doc->add_field_values("user_1 doc_3 pict_url");
+ *      // doc 4
+ *      doc = group->add_docs();
+ *      doc->add_field_values("user_1 doc_4 title");
+ *      doc->add_field_values("user_1 doc_4 nid");
+ *      doc->add_field_values("user_1 doc_4 pict_url");
+ *      // stats
+ *      stat = extend.add_stats();
+ *      stat->add_stat_values(1.00f);
+ *      stat->add_stat_values(1);
+ *
+ *      // second user(group): no doc but stat
+ *      group = extend.add_groups();
+ *      // stats
+ *      stat = extend.add_stats();
+ *      stat->add_stat_values(2.00f);
+ *      stat->add_stat_values(2);
+ *
+ *      // third user(group): no stat but doc
+ *      group = extend.add_groups();
+ *      doc = group->add_docs();
+ *      doc->add_field_values("user_3 doc_1 title");
+ *      doc->add_field_values("user_3 doc_1 nid");
+ *      doc->add_field_values("user_3 doc_1 pict_url");
+*      stat = extend.add_stats();
+*
+* </code>
+**/
+message KSExtend
+{
+    repeated uint32 uniq_count = 1;
+
+    repeated string field_names = 2;
+
+    message Group
+    {
+        repeated KSDocument docs = 1;
+    }
+
+    repeated Group groups = 3;
+
+    message UniqIIStat
+    {
+        repeated double stat_values = 1;
+    }
+
+    repeated string stat_field_names = 4;
+    repeated uint32 stat_types = 5;
+    repeated UniqIIStat stats = 6;
+}
+
+/**
+ * Debug段
+ * 输出一些debug信息
+ * query_trace：query相关的debug信息，比如分词结果等
+ * global_trace：全局相关的debug信息，比如merger&searcher机器ip
+ * trace_field/docs_trace：doc级别的debug信息，每个doc都可以包含多个debug相关的字段。
+ *      比如一些算法排序相关的字段（ss_score/static_trans_score等）
+ *
+ * docs_trace与Data段里的每个Document一一对应，所以同样这里docs_trace值的个数应该与Header里的docs_return一致
+ * 如果某一个doc没有doc trace，则需要add一个所有field_values都为""的空doc trace以占位。E.g.
+ * <code>
+ *       KSDebug debug;
+ *
+ *       // ...
+ *
+ *       debug.add_trace_fields("doc_trace_field_1");
+ *       debug.add_trace_fields("doc_trace_field_2");
+ *
+ *       KSDocument *doc = debug.add_docs_trace();
+ *       // both doc trace field value is ""
+ *       doc->add_field_values("");
+ *       doc->add_field_values("");
+ * </code>
+ **/
+message KSDebug
+{
+    optional string query_trace = 1;
+    optional string global_trace = 2;
+    repeated string trace_fields = 3;
+    repeated KSDocument docs_trace = 4;
+}

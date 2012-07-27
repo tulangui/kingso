@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<modules>
+    <indexLib>
+        <profile path="/whereami/rundata/profile" />
+        <index path="/whereami/rundata/index" />
+        <idDict path="/whereami/rundata/dict" />
+        <provcity path="/whereami/etc/provcity.txt" />
+    </indexLib>
+    <statistic sample_statistic_limit="1000"
+        sample_statistic_max_count="200"
+        category_file="/whereami/rundata/stat/catrelatetable.dat">
+    </statistic>
+    <search> 
+        <fields>
+            <field name="title" OccWeight="127:10000 128:1000" />
+            <field name="cat_id_path" stopwords="0,1,2,3" />
+            <field name="spuid" stopwords="0" />
+            <field name="categoryp" stopwords="0" />
+            <field name="lp_start" stopwords="0" />
+        </fields>
+    </search>
+
+    <!-- latency_limit        单位毫秒，search latency 小于限制不进cache
+         delay_time           达到轮播条件后，cache仍然可以使用的时间限制，单位分钟
+         active_time          对于每个query在cache中的有效时间限制，单位分钟
+         inc_doc_found_limit  增量结果超过限制后，cache失效一次
+    -->
+    <fullcache
+        full_cache_max_num="200000"
+        full_cache_max_size="2048"
+        latency_limit="0" 
+        delay_time="15"
+        active_time="30"
+        inc_doc_found_limit="1000"
+        merger_sort_config_path="/whereami/etc/merger_sort.xml">
+    </fullcache>
+    <queryParser>
+        <qp_searcher>
+            <qp_argumet name="catmap" field="cat_id_path" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="pidvid" field="pidvid" dest="syntax" parser="syntax_keyvalue_parser"/>
+            <qp_argumet name="properties" field="properties" dest="syntax" parser="syntax_keyvalue_parser"/>
+            <qp_argumet name="atype" field="auction_type" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="auction_flag" field="auction_flag" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="auto_post" field="auto_post" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="baobei_type" field="baobei_type" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="cat" field="categoryp" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="commend" field="commend" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="counts" field="counts" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="hidden_prop" field="hprop" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="isnew" field="isnewest" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="isprepay" field="isprepay" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="istk" field="istk" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="lptime" field="lptime" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="nick" field="nick" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="nid" field="nid" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="oney" field="oneyuan" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="options" field="options_bits" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="pid" field="pid" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="promote" field="promote" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="promoted_service" field="psbit" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="ratesum" field="ratesum" dest="syntax" parser="syntax_multivalue_parser" tofilter="true"/>
+            <qp_argumet name="shipping" field="shipping" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="spugroupid" field="spugroupid" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="spuid" field="spuid" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="support_cod" field="support_cod" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="support_xcard" field="support_xcard" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="user" field="user" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="user_id" field="user_id" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="user_type" field="user_type" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="has_bid" field="has_bid" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="uchar" field="uchar" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="lp_start" field="lp_start" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="auction_tag" field="auction_tag" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="search_custom" field="search_custom" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="disp_flag" field="disp_flag" dest="syntax" parser="syntax_multivalue_parser"/>
+            <qp_argumet name="price" field="reserve_price" dest="filter" parser="filter_sentence_parser"/>
+            <qp_argumet name="loc" field="provcity" dest="filter" parser="filter_sentence_parser"/>
+        </qp_searcher>
+    </queryParser>
+</modules>
+

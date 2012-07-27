@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- 索引路径配置 -->
+<modules>
+    <indexLib>
+        <profile  path="/whereami/build/output/profile/" />
+        <index    path="/whereami/build/output/index/" />
+        <idDict   path="/whereami/build/output/dict/" />
+        <provcity path="/whereami/etc/provcity.txt" />
+    </indexLib>
+</modules>
+
+
+<!-- 被认为是高频词的链条最小长度 -->
+<hf_min_doc_num   value="100000" />
+
+<!-- 高频词的链条 截断长度  -->
+<hf_cutoff_doc_num value="50000" />
+
+<!-- 每个截断链内部的doc对应的独立user_id的个数 -->
+<hf_min_userId_num value="20000" />
+
+
+<!-- 用于进行排序的字段名字 和 排序方式 -->
+<hf_ps_fields>
+    <field name="ends"               sort_type="ASC" />
+    <field name="static_trans_score" sort_type="DESC" />
+    <field name="reserve_price"      sort_type="ASC" />
+    <field name="tk_trans_score"     sort_type="DESC" />
+    <field name="biz30day"           sort_type="DESC" />
+</hf_ps_fields>

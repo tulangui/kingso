@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<clustermap>
+    <blender_list>
+        <blender_cluster name="b1">
+            <blender ip="10.232.42.17" port="2087" protocol="http"/>
+        </blender_cluster>
+    </blender_list>
+    <merger_list>
+        <merger_cluster name="m1" level="1">
+            <merger ip="10.232.42.17" port="8811" protocol="tcp"/>
+        </merger_cluster>
+    </merger_list>
+    <search_list>
+        <search_cluster name="c1" docsep="true" level="1" cpu_limit="90" load_one_limit="20" io_wait_limit="20" qps_limit="-20" latency_limit="20" offline_limit="20" hold_time="1" >
+             <search ip="10.232.42.17" port="7711" protocol="tcp" type="search"/>
+             <search ip="10.232.42.17" port="6611" protocol="tcp" type="doc"/>
+        </search_cluster>
+    </search_list>
+    <merger_cluster_list>
+        <merger_cluster name="m1">
+            <search_cluster name="c1"/>
+        </merger_cluster>
+    </merger_cluster_list>
+    <blender_cluster_list>
+        <blender_cluster name="b1">
+            <merger_cluster name="m1"/>
+        </blender_cluster>
+    </blender_cluster_list>
+</clustermap>

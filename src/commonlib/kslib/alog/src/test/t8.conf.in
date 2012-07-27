@@ -1,0 +1,10 @@
+alog.rootLogger=DEBUG, A2.A3
+alog.logger.sub1=INFO, A1 
+alog.logger.sub2=INFO
+alog.logger.sub1.sub2=INFO, A1, A2.A3
+inherit.sub1=false
+
+alog.appender.A1.fileName=ConsoleAppender
+
+alog.appender.A2.A3=FileAppender
+alog.appender.A2.A3.fileName=@ALOG_TOP_BUILD_DIR@/configuretest8.log

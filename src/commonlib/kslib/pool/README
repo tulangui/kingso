@@ -1,0 +1,127 @@
+==pool是什么?==
+
+pool是用于管理内存、对象分配的一套基础库，用于减少内存碎片，提高程序性能。 
+
+==类说明==
+*Pool 
+  功能：负责内存的分配，提供alloc函数接口，不提供内存的释放接口，即用户只管申请内存不用考虑内存的释放，在Pool销毁或release时统一释放。 
+  模板参数：Pool是一个模板类，具有一个模板参数，即内存分配策略，Pool本身并不负责内存管理，由具体的内存分配策略实现。 
+
+*ObjectPool 
+  功能：提供newObj、newArray接口，实现对象或对象数组的分配，不提供对象的释放接口，即用户只管申请对象，不用考虑对象的释放，对象在ObjectPool销毁或release时统一析构。 
+  模板参数：ObjectPool是一个模板类，具有一个模板参数，即内存分配策略。ObjectPool继承自Pool，内存管理由Pool类实现，ObjectPool只实现对象的构造和析构。 
+
+*PoolAllocator 
+ 功能：基于Pool类的stl容器Allocator。 
+ 模板参数：容器的元素类型和内存分配策略。 
+
+*SimpleAllocator 
+ 功能：可替换内存分配方式的stl容器Allocator，可使用malloc/free,new/delete和mmap/munmap内存分配方式 
+ 模板参数：容器的元素类型和内存分配方式。 
+
+==编译安装==
+  编译示例：./configure && make && make install 
+  编译测试代码：./configure && make check 
+
+==代码使用示例==
+*Pool 
+    ///example for pool,using default allocator and allocate policy
+    utils::Pool<> pool1;
+    pool1.setChunkSize(512);///set chunk size to 512 bytes
+    char* p = (char*)pool1.alloc(10);///alloc 10 bytes from pool
+    memset(p,0,10);
+    const utils::MemStat st = pool1.getMemStat();///get pool state
+    printf("state of pool1:total:%d,free:%d,used:%d\n",st.getTotalBytes(),st.getBytesFree(),st.getBytesUsed() );
+    pool1.release();///release pool
+
+    ///example for pool,using malloc/free allocator and fixed size chunk policy
+    utils::Pool<utils::FixedSizeChunkPolicy<utils::MallocFreeAllocator> > pool2;
+    p = (char*)pool2.alloc(10);///alloc 10 bytes from pool
+    pool2.release();///release pool
+
+    ///example for pool,using new/delete allocator and fixed size chunk policy
+    utils::Pool<utils::FixedSizeChunkPolicy<utils::NewDeleteAllocator> > pool3;
+    p = (char*)pool3.alloc(10);///alloc 10 bytes from pool
+    pool3.release();///release pool
+
+    ///example for pool,using mmap/munmap allocator and fixed size chunk policy
+    utils::Pool<utils::FixedSizeChunkPolicy<utils::MMapAllocator> > pool4;
+    p = (char*)pool4.alloc(10);///alloc 10 bytes from pool
+    pool4.release();///release pool
+
+    ///example for pool,using new/delete allocator and exponential increase chunk policy
+    utils::Pool<utils::ExpIncChunkPolicy<utils::NewDeleteAllocator> > pool5;
+    p = (char*)pool5.alloc(10);///alloc 10 bytes from pool
+    pool5.release();///release pool
+
+    ///example for pool,using new/delete allocator and adaptive statistic policy
+    utils::Pool<utils::AdaptiveStatPolicy<utils::NewDeleteAllocator> > pool6;
+    p = (char*)pool6.alloc(10);///alloc 10 bytes from pool
+    pool6.release();///release pool
+
+*ObjectPool 
+    ///example for object pool, using default allocator and allocate policy
+    utils::ObjectPool<> objPool1;
+
+    ///new object from object pool
+    Object* pObj = utils::newObj<Object>(&objPool1);
+    Object* pObjArray = utils::newArray<Object>(&objPool1,10);
+    int* pIntArray = utils::newVec<int>(&objPool1,100);
+
+    ///example for object pool, using default allocator and allocate policy
+    utils::ObjectPool<utils::AdaptiveStatPolicy<utils::MMapAllocator> > objPool2;
+
+    ///new object from object pool
+    pObj = utils::newObj<Object>(&objPool2);
+    pObjArray = utils::newArray<Object>(&objPool2,10);
+    pIntArray = utils::newVec<int>(&objPool2,100);
+
+    /***examples for MemPool ***/
+    ///example for MemPool which is a backend class
+    MemPool mp;
+    pObj = NEW(&mp,Object);
+    pObjArray = NEW_ARRAY(&mp,Object,10);
+    pIntArray = NEW_VEC(&mp,int,100);
+
+*MemPool 
+    MemPool mp;
+    pObj = NEW(&mp,Object);
+    pObjArray = NEW_ARRAY(&mp,Object,10);
+    pIntArray = NEW_VEC(&mp,int,100);
+
+*stl allocator 
+    /***examples for stl allocators ***/
+    ///example for replacing std::vector allocator with simple allocator
+    std::vector<int,utils::SimpleAllocator<int> >intVec;
+    for(int i = 0; i < 10; i++)
+        intVec.push_back(i);
+
+    ///example for replacing std::vector allocator with simple allocator,using mmap/munmap to allocate memory
+    std::vector<int,utils::SimpleAllocator<int,utils::MMapAllocator> >intVec2;
+    for(int i = 0; i < 10; i++)
+        intVec2.push_back(i);
+
+    ///example for replacing std::vector allocator with pool allocator
+    std::vector<int,utils::PoolAllocator<int> >intVec3;
+    for(int i = 0; i < 10; i++)
+        intVec3.push_back(i);
+    ///pop the last element, the memory of the element is NOT freed until the pool is destroyed or released.
+    intVec3.pop_back();
+
+    ///example for replacing std::vector allocator with pool allocator,using exponential increase chunk policy
+    std::vector<int,utils::PoolAllocator<int,utils::ExpIncChunkPolicy<> > >intVec4;
+    for(int i = 0; i < 10; i++)
+        intVec4.push_back(i);
+    ///pop the last element, the memory of the element is NOT freed until the pool is destroyed or released.
+    intVec4.pop_back();
+
+    ///example for replacing std::map allocator with pool allocator,using exponential increase chunk policy
+    std::map<int,int,std::less<int>,utils::PoolAllocator<std::pair<const int,int>,utils::ExpIncChunkPolicy<> > >map1;
+    for(int i = 0; i < 10; i++)
+        map1.insert(std::make_pair(i,i + 1));
+
+完整代码请参考[Example Code]或[Test Code] 
+
+==API 文档==
+使用doxygen生成文档：./configure && make doxygen 
+

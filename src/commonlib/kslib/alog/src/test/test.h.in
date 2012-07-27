@@ -1,0 +1,6 @@
+#ifndef _ALOG_TEST_H_
+#define _ALOG_TEST_H_
+#define TOP_BUILD_DIR "@ALOG_TOP_BUILD_DIR@"
+#define CONF_FILE_DIR "@ALOG_TOP_BUILD_DIR@/src/test"
+#endif
+

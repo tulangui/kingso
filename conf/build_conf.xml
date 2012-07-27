@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+<ks>
+    <!-- 停用词配置文件 -->
+    <stopword dict="/whereami/etc/stopwords.txt" />
+    <!-- -->
+    <wrapper dict="/whereami/etc/wrapper.dict" />
+    <!-- 省市编码表 -->
+    <provcity dict="/whereami/etc/provcity.txt" />
+    <!--设置使用的分词器,目前配置的是scws,一种开源的分词器-->
+    <tokenizer conf_path="" ws="SCWS" />
+    <!--
+    index: 倒排索引配置段, 包含多个倒排索引字段（field）
+    field:
+        name: 字段名称
+        index_type：输入字段的类型, 一般都是str
+        gbk2utf8：是否需要做gbk到utf8的编码转换
+        value_delim: 指定token之间的分隔符
+    -->
+    <index>
+        <field name="field_1" index_type="str" gbk2utf8="y"/>
+        <field name="field_2" index_type="str" />
+        <field name="field_3" index_type="str" />
+        <field name="nid" index_type="str" />
+        <field name="field_5" index_type="str" />
+    </index>
+
+    <!--
+    profile: 正排索引配置段，包含多个正排索引字段（field）
+    field：
+        name：字段名称
+        index_type：输入字段的类型
+        value_type：字段类型，AT_INT8，AT_UINT8, AT_INT16, AT_UINT16, AT_INT32, 
+                              AT_UINT32, AT_INT64, AT_UINT64, AT_DOUBLE, AT_FLOAT
+        multi_num：0 (多值)， 1 (单值)
+        compress：是否进行字段压缩
+        load_type: 是否把字段预加载到内存中
+    -->
+    <package>
+        <group fields="field_1 field_2" />
+    </package>
+    <profile sub_dir="profile">
+        <field name="field_1" index_type="str" value_type="AT_INT32" multi_num="1"  compress="N" load_type="AT_PRELOAD" />
+        <field name="field_2" index_type="str" value_type="AT_INT32" multi_num="0"  compress="N" load_type="AT_PRELOAD" />
+        <field name="field_3" index_type="str" value_type="AT_FLOAT" multi_num="1"  compress="N" load_type="AT_PRELOAD" />
+        <field name="nid" index_type="str" value_type="AT_INT64" multi_num="1"  compress="N" load_type="AT_PRELOAD" />
+        <field name="field_6" index_type="str" value_type="AT_DOUBLE" multi_num="1"  compress="N" load_type="AT_PRELOAD" />
+        <field name="field_7" index_type="str" value_type="AT_UINT16" multi_num="0"  compress="N" load_type="AT_PRELOAD" />
+    </profile>
+
+    <!--
+    detail: 文档展示信息段，包含多个展示字段
+    field：
+        name：字段名称
+        gbk2utf8：是否需要做gbk到utf8的编码转换
+        allow_null: 是否允许为空值
+    -->
+    <detail>
+        <field name="field_1"  index_type="str"   gbk2utf8="y" />
+        <field name="field_2"  index_type="str"  />
+        <field name="field_3"  index_type="str"  />
+        <field name="nid"  index_type="str" allow_null="n" />
+        <field name="field_5"  index_type="str"  />
+        <field name="field_6"  index_type="str"  />
+        <field name="field_7"  index_type="str"  />
+    </detail>
+</ks>

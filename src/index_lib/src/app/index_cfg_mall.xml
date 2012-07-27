@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<globals name="globals"
+  root="/home/nfs/xiaojie.lgx/"
+/>
+<index name="index" sub_dir="index_full" input_dir="/home/nfs/yuanyue.hyj/index/">
+	<index_field name="title" max_occ="1"  />
+  <index_field name="user" max_occ="0" />
+  <index_field name="categoryp" max_occ="0"  />
+	<index_field name="cat_id_path" max_occ="0"  />
+  <index_field name="auction_type" max_occ="0" />
+	<index_field name="oneyuan" max_occ="0"  />
+  <index_field name="promote" max_occ="0" />
+	<index_field name="commend" max_occ="0"  />
+  <index_field name="ratesum" max_occ="0" />
+  <index_field name="nick" max_occ="0" />
+	<index_field name="counts" max_occ="0"  />
+<index_field name="zoo_prop" max_occ="0"  />
+  <index_field name="shipping" max_occ="0" />
+	<index_field name="isnewest" max_occ="0"  />
+	<index_field name="auto_post" max_occ="0"  />
+	<index_field name="auction_flag" max_occ="0"  />
+	<index_field name="options_bits" max_occ="0"  />
+	<index_field name="has_bid" max_occ="0"  />
+	<index_field name="isprepay" max_occ="0"  />
+  <index_field name="uchar" max_occ="0" />
+  <index_field name="psbit" max_occ="0" />
+  <index_field name="spuid" max_occ="0" />
+	<index_field name="pidvid" max_occ="0"  />
+  <index_field name="spugroupid" max_occ="0" />
+  <index_field name="user_id" max_occ="0" />
+  <index_field name="user_type" max_occ="0" />
+	<index_field name="pid" max_occ="0"  />
+  <index_field name="support_cod" max_occ="0" />
+  <index_field name="support_xcard" max_occ="0" />
+	<index_field name="baobei_type" max_occ="0"  />
+  <index_field name="lptime" max_occ="0" />
+  <index_field name="lp_start" max_occ="0" />
+  <index_field name="istk" max_occ="0" />
+</index>
+	

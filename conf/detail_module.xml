@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    说明：
+    index： detail索引文件所在路径
+    data：  detail信息文件所在路径
+    model： 
+    msgcnt：
+    plugin：detail处理插件所在路径
+-->
+<index 	path="/whereami/rundata/detail/detail.idx" />
+<data  	path="/whereami/rundata/detail/detail.dat" />
+<model 	path="/whereami/rundata/detail/detail.mdl" />
+<msgcnt path="/whereami/rundata/detail/msgcnt.cnt" />
+<plugin path="/whereami/detail_plugin/" />

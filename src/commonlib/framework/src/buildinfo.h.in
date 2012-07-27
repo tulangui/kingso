@@ -1,0 +1,12 @@
+#ifndef _FRAMEWORK_BUILDINFO_H_
+#define _FRAMEWORK_BUILDINFO_H_
+
+#define HOSTNAME "@HOSTNAME@"
+#define USER "@USER@"
+#define RELEASE "@RELEASE@"
+#define PREFIX "@prefix@"
+#define CFLAGS "@CFLAGS@"
+#define CXXFLAGS "@CXXFLAGS@"
+
+#endif //_FRAMEWORK_BUILDINFO_H_
+
