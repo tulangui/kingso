@@ -112,7 +112,7 @@ bool isInteger(const char* szStr);
  *	url encode, 请使用urlEncode2, urlEncode有bug
  */
 void urlEncode(char* buf, const char* str);
-void urlEncode2(char* buf, const char* str);
+void urlEncode2(char *buf, int buf_len, const char *url);
 
 /*
  *  url decode
