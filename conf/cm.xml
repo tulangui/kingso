@@ -2,13 +2,13 @@
 <clustermap>
     <merger_list>
         <merger_cluster name="m1" level="1">
-            <merger ip="10.232.42.21" port="8822" protocol="http"/>
+            <merger ip="127.0.0.1" port="8822" protocol="http"/>
         </merger_cluster>
     </merger_list>
     <search_list>
         <search_cluster name="c1" docsep="true" level="1">
-             <search ip="10.232.42.21" port="7711" protocol="tcp" type="search"/>
-             <search ip="10.232.42.21" port="6611" protocol="tcp" type="doc"/>
+             <search ip="127.0.0.1" port="7711" protocol="tcp" type="search"/>
+             <search ip="127.0.0.1" port="6611" protocol="tcp" type="doc"/>
         </search_cluster>
     </search_list>
     <merger_cluster_list>
