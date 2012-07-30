@@ -6,7 +6,7 @@
 
 Summary: kingso_opensource
 Name: kingso_opensource
-Version: 0.0.1
+Version: 0.8.6
 Release: 1
 Source: %{source}
 License: GPL
@@ -23,7 +23,7 @@ sh ./run.sh
 %install
 rm -rf %{buildroot}
 mkdir -p %{buildroot}
-cp -r %{_topdir}/BUILD/kingso_opensource-0.0.1/build/dst/ %{buildroot}/%{_prefix}
+cp -r %{_topdir}/BUILD/kingso_opensource-0.8.6/build/dst/ %{buildroot}/%{_prefix}
 %post
 
 %clean
