@@ -24,8 +24,17 @@ AC_C_INLINE
 # Checks for library functions.
 
 #protobuf
+trylib=""
+AC_ARG_WITH(protobuf,
+            [  --with-protobuf=PATH     Specify path to kslib installation. Default /usr/local ],
+            [
+             if test "x$withval" != "xno" ; then
+                 trylib=$withval
+             fi
+             ]
+            )
 PROTOBUF_LDADD="-lprotobuf"
-PROTOBUF_ROOT="/usr/"
+PROTOBUF_ROOT=$trylib
 AC_SUBST(PROTOBUF_LDADD)
 AC_SUBST(PROTOBUF_ROOT)
 
