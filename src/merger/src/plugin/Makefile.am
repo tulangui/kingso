@@ -2,9 +2,9 @@ AM_LDFLAGS = -static-libtool-libs
 LIBS=-lqueryparser -lsort -lstatistic -lindex_lib -lclustermap -lkslib -lprotobuf -lanalysis
 bindir = $(prefix)/lib
 
-bin_PROGRAMS=libmainse_plugin.so
-libmainse_plugin_so_SOURCES= \
-							mainse_plugin.cc \
+lib_LTLIBRARIES = libmainse_plugin.la
+
+libmainse_plugin_la_SOURCES = mainse_plugin.cc \
 							DocumentRewrite.cpp \
 							../frame/MemPoolFactory.cc \
 							../frame/ResultFormat.cc \
@@ -12,7 +12,6 @@ libmainse_plugin_so_SOURCES= \
 							../frame/Document.cc \
 							../frame/KSResult.pb.cc \
                             $(NULL)
-libmainse_plugin_so_CPPFLAGS=-fPIC
-libmainse_plugin_so_LDFLAGS=-module -shared
+libmainse_plugin_la_LDFLAGS = -fPIC -module -shared
 
 DEFS+=$(MACRO)
