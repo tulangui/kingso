@@ -9,7 +9,8 @@
 #ifndef _ALOG_LOGGINGEVENT_H_
 #define _ALOG_LOGGINGEVENT_H_
 
-#include <linux/unistd.h>
+//#include <linux/unistd.h>
+#include <unistd.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <string>

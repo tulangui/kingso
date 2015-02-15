@@ -23,6 +23,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <pthread.h>
+#include <linux/limits.h>
 #include "DGramClient.h"
 #include "DGramServer.h"
 #include "CMWatchPoint.h"

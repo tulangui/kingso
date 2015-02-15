@@ -15,6 +15,7 @@
  */
 
 #include <stdio.h>
+#include <unistd.h>
 #include <dirent.h>
 #include <arpa/inet.h>
 #include <sys/time.h>

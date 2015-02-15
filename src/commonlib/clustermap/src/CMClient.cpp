@@ -15,6 +15,7 @@
  */
 
 #include <stdio.h>
+#include <unistd.h>
 #include <mxml.h>
 #include <fcntl.h>
 #include <sys/types.h>
@@ -415,7 +416,7 @@ int32_t CMClient::setSubClusterStation(char* stateBitmap, int32_t stateBitmapLen
 
 int32_t CMClient::parseAppSpec(const char* app_spec)
 {
-    char* p = strchr(app_spec, ':');
+    const char* p = strchr(app_spec, ':');
     if(p == NULL)
         return -1;
 
@@ -428,7 +429,7 @@ int32_t CMClient::parseAppSpec(const char* app_spec)
     if(cProtocol.strToProtocol(buf, m_app_pro) != 0)
         return -1;
 
-    char* p1 = p + 1;
+    const char* p1 = p + 1;
     p = strchr(p1, ':');
     if(p == NULL || p - p1 >= 24)
         return -1;

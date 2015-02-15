@@ -3,6 +3,7 @@
 #include <pthread.h>
 #include <syslog.h>
 #include <stdlib.h>
+#include <algorithm>
 #include <zlib.h>
 #include <fcntl.h>
 #include <errno.h>

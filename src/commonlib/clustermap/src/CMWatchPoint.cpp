@@ -15,6 +15,7 @@
  */
 
 #include <stdlib.h>
+#include <unistd.h>
 #include "CMWatchPoint.h"
 
 namespace clustermap {

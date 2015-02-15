@@ -22,6 +22,7 @@
 #include <map>
 #include <stdint.h>
 #include <mxml.h>
+#include <linux/limits.h>
 #include "util/ThreadLock.h"
 #include "util/ScopedLock.h"
 #include "util/Log.h"
